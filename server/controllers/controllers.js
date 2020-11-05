@@ -1,14 +1,15 @@
 const toDoList = require('../models/schema');
 
+//This function is to send the TODO List back to the client whenever a get request is fired. We use exports to export the function or object
 exports.sendList = (req,res)=> {
     toDoList.find((err,data)=>{
-        console.log(req.method + "Method arrived");
         res.json(data)
         if(err)
             res.json(err)
     })
 }
 
+//This function is to save a new task whenever a post request is fired by the client
 exports.saveList = (req,res)=>{
     console.log(req.body)
    let item = new toDoList({
@@ -22,7 +23,7 @@ exports.saveList = (req,res)=>{
         res.json("Data saved successfully");
     })
 }
-
+//This function is to edit a  task whenever a put request is fired by the client
 exports.editList = (req,res) => {
     toDoList.findById(req.body._id, (err,data)=>{
         if(err){
@@ -37,6 +38,7 @@ exports.editList = (req,res) => {
     })
 }
 
+//This function is to delete a  task whenever a delete request is fired by the client
 exports.deleteList = (req,res) => {
     toDoList.deleteOne({"_id":req.params.id }, (error,data) => {
         if (error) {
